@@ -19,7 +19,7 @@ const app = express();
 // Connect to MongoDB
 connectDB();
 
-shell.cp("-R", "/views", "dist/");
+shell.cp("-R", "/views", "dist/src");
 
 // Setting the view engine
 app.set("view engine", "ejs");
