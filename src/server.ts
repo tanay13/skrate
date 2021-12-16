@@ -2,6 +2,8 @@ import * as dotenv from "dotenv";
 
 dotenv.config();
 
+import * as shell from "shelljs";
+
 import bodyParser from "body-parser";
 import express from "express";
 import path from "path";
@@ -16,6 +18,8 @@ const app = express();
 
 // Connect to MongoDB
 connectDB();
+
+shell.cp("-R", "/views", "dist/");
 
 // Setting the view engine
 app.set("view engine", "ejs");
