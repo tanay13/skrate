@@ -4,6 +4,7 @@ import { validationResult } from "express-validator/check";
 import HttpStatusCodes from "http-status-codes";
 
 import Request from "../../types/Request";
+import Meeting, { IMeeting } from "../../models/Meeting";
 import User, { IUser } from "../../models/User";
 
 const router: Router = Router();
@@ -15,32 +16,25 @@ router.post("/new", async (req: Request, res: Response) => {
       .status(HttpStatusCodes.BAD_REQUEST)
       .json({ errors: errors.array() });
   }
-
-  const { username } = req.body;
+  const { user, date } = req.body;
+  console.log(user);
   try {
-    let user: IUser = await User.findOne({ username });
-
-    if (user) {
-      return res.status(HttpStatusCodes.BAD_REQUEST).json({
-        errors: [
-          {
-            msg: "User already exists",
-          },
-        ],
+    let user1: IUser = await User.findOne({ username: user[0] });
+    let user2: IUser = await User.findOne({ username: user[1] });
+    if (!user1 || !user2 || user1.id == user2.id) {
+      return res.json({
+        msg: "Error",
       });
     }
-
-    // Build user object based on IUser
-    const userFields = {
-      username,
+    // Build user object based on IMeeting
+    const meetingFields = {
+      user: [user1.id, user2.id],
+      date,
     };
-
-    user = new User(userFields);
-
-    await user.save();
-
+    const meeting = new Meeting(meetingFields);
+    await meeting.save();
     res.json({
-      userId: user.id,
+      meeting: meeting.id,
     });
   } catch (err) {
     console.error(err.message);
@@ -57,9 +51,9 @@ router.get("/all", async (req: Request, res: Response) => {
   }
 
   try {
-    let users: IUser[] = await User.find({});
+    const meetings = await Meeting.find({});
     res.json({
-      users: users,
+      meetings,
     });
   } catch (err) {
     console.error(err.message);

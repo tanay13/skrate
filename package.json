@@ -1,8 +1,8 @@
 {
-  "name": "mongoose-express-ts",
+  "name": "skrate",
   "version": "1.0.0",
-  "description": "Mongoose Node.js Express TypeScript application boilerplate with best practices for API development.",
-  "author": "Paul Cham",
+  "description": "Skrate task",
+  "author": "Tanay Raj",
   "license": "MIT",
   "scripts": {
     "tsc": "tsc",
