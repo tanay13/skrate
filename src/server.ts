@@ -38,7 +38,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // @desc    Test Base API
 // @access  Public
 app.get("/", (_req, res) => {
-  shell.cp("-R", "views", "dist/src");
   res.render("index");
 });
 app.use("/api/users", user);

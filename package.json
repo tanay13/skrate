@@ -8,7 +8,7 @@
     "tsc": "tsc",
     "watch-tsc": "tsc -w",
     "copy-assets": "tsc tool/copyAsset.ts",
-    "deploy": "node dist/src/server.js",
+    "deploy": "concurrently \"node tool/copyAsset.js\" \"node dist/src/server.js\"",
     "watch-deploy": "nodemon dist/src/server.js",
     "server": "concurrently \"npm run watch-tsc\" \"npm run watch-deploy\"",
     "start": "npm run deploy",
@@ -41,7 +41,7 @@
     "@types/jsonwebtoken": "^8.3.2",
     "@types/mongoose": "^5.5.0",
     "@types/shelljs": "^0.8.9",
-    "concurrently": "^4.1.0",
+    "concurrently": "^4.1.2",
     "nodemon": "^1.19.0"
   }
 }
