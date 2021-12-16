@@ -19,8 +19,6 @@ const app = express();
 // Connect to MongoDB
 connectDB();
 
-shell.cp("-R", "/views", "dist/src");
-
 // Setting the view engine
 app.set("view engine", "ejs");
 // Setting for the root path for views directory
@@ -40,6 +38,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // @desc    Test Base API
 // @access  Public
 app.get("/", (_req, res) => {
+  shell.cp("-R", "views", "dist/src");
   res.render("index");
 });
 app.use("/api/users", user);
