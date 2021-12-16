@@ -1,8 +1,6 @@
 import { Router, Response } from "express";
 import { validationResult } from "express-validator/check";
-
 import HttpStatusCodes from "http-status-codes";
-
 import Request from "../../types/Request";
 import Meeting, { IMeeting } from "../../models/Meeting";
 import User, { IUser } from "../../models/User";
@@ -16,11 +14,11 @@ router.post("/new", async (req: Request, res: Response) => {
       .status(HttpStatusCodes.BAD_REQUEST)
       .json({ errors: errors.array() });
   }
-  const { user, date } = req.body;
-  console.log(user);
+  const { userF, userS, date } = req.body;
+
   try {
-    let user1: IUser = await User.findOne({ username: user[0] });
-    let user2: IUser = await User.findOne({ username: user[1] });
+    let user1: IUser = await User.findOne({ username: userF });
+    let user2: IUser = await User.findOne({ username: userS });
     if (!user1 || !user2 || user1.id == user2.id) {
       return res.json({
         msg: "Error",
@@ -51,7 +49,8 @@ router.get("/all", async (req: Request, res: Response) => {
   }
 
   try {
-    const meetings = await Meeting.find({});
+    const meetings: IMeeting[] = await Meeting.find({}).populate("user");
+
     res.json({
       meetings,
     });

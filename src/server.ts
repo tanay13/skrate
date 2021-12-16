@@ -1,5 +1,6 @@
 import bodyParser from "body-parser";
 import express from "express";
+import path from "path";
 
 import connectDB from "../config/database";
 
@@ -12,8 +13,18 @@ const app = express();
 // Connect to MongoDB
 connectDB();
 
+// Setting the view engine
+app.set("view engine", "ejs");
+// Setting for the root path for views directory
+app.set("views", path.join(__dirname, "views"));
+
 // Express configuration
 app.set("port", process.env.PORT || 5000);
+
+app.set("views", path.join(__dirname, "views"));
+
+app.set("view engine", "ejs");
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
@@ -21,9 +32,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // @desc    Test Base API
 // @access  Public
 app.get("/", (_req, res) => {
-  res.send("API Running");
+  res.render("index");
 });
-
 app.use("/api/users", user);
 app.use("/api/meetings", meeting);
 

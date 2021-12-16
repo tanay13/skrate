@@ -9,6 +9,8 @@ import User, { IUser } from "../../models/User";
 const router: Router = Router();
 
 router.post("/new", async (req: Request, res: Response) => {
+  console.log("IN");
+
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res
