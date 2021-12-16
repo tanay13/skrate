@@ -63,7 +63,7 @@ Request Body
 }
 ```
 
-#### For listing all
+#### For listing all meetings
 
 ```
 api/meeting/all
